@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-    <form method="POST">
+{% block main %}
 
-        {{  form.hidden_tag()  }}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-        <p>
-            {{  form.username.label  }}
-            {{  form.username()  }}
-        </p>
+<main class="m-4 p-4 shadow">
+    <form method="post">
+        {% for errors in form.errors.values() %}
+        {% for error in errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endfor %}
 
-        <p>
-            {{  form.password.label  }}
-            {{  form.password()  }}
-        </p>
-
-        <p>
-            {{  form.submit()  }}
-        </p>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control")}}
+        </div>
+        {{ form.submit(class="btn btn-dark") }}
     </form>
-</body>
-</html>
+
+
+</main>
+{% endblock %}
