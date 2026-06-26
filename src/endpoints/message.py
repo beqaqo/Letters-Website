@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask_restx import Resource, reqparse
 
+from src.ext import api
 from src.models.user import User
 from src.models.message import Message
 
@@ -14,7 +15,7 @@ parser.add_argument('title', required=True)
 parser.add_argument('text', required=True)
 parser.add_argument('send_date', required=True)
 class MessageResource(Resource):
-
+    @api.expect(parser)
     def post(self):
 
         args = parser.parse_args()
