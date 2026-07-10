@@ -1,13 +1,13 @@
 from flask import Flask
-from flask_restx import Resource
 
 from src.admin_views import register_admin_views
 from src.config import Config
-from src.ext import admin, api, db, login_manager
+from src.ext import admin, api, db, login_manager, migrate
 from src.models.admin import Admin
 
 from src.endpoints.photo import PhotoResource
 from src.endpoints.message import MessageResource
+from src.endpoints.auth import GoogleVerify
 
 from src.admin_views.base import SecureIndexView
 
@@ -22,6 +22,8 @@ def create_app():
 
     app.config.from_object(Config)
     db.init_app(app)
+
+    migrate.init_app(app, db)
 
     admin.init_app(
         app,

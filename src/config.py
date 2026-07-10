@@ -8,3 +8,4 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_PATH, 'db.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    GOOGLE_CLIENT_ID = "305184097104-3469fsip3jcusvduiueokmp2jkul3qje.apps.googleusercontent.com"

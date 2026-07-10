@@ -11,6 +11,19 @@ parser.add_argument(
     required=True,
     location='args'
 )
+parser.add_argument(
+    'page',
+    type=int,
+    required=True,
+    location='args'
+)
+
+parser.add_argument(
+    'year',
+    type=int,
+    required=False,
+    location='args'
+)
 
 
 @api.expect(parser)
@@ -18,15 +31,21 @@ class PhotoResource(Resource):
 
     def get(self):
         args = parser.parse_args()
+        page = args['page']
+        perpage_count = args['count']
+        year = args['year']
 
-        photos = Photo.query.limit(
-            args['count']
-        ).all()
+        query = Photo.query
+        if year:
+            query = query.filter_by(year=year)
+
+        photos = query.paginate(page=page, per_page=perpage_count, error_out=False)
 
         return [
             {
                 'id': photo.id,
-                'img': photo.img
+                'img': photo.img,
+                'year': photo.year,
             }
-            for photo in photos
+            for photo in photos.items
         ]
